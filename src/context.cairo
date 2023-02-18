@@ -30,6 +30,8 @@ struct ExecutionContext {
 trait ExecutionContextTrait {
     /// Create a new execution context.
     fn new(call_context: CallContext) -> ExecutionContext;
+    /// Update the execution context with a new stack
+    fn update_stack(ref self: ExecutionContext, stack: Stack);
     /// Compute the intrinsic gas cost for the current transaction and increase the gas used.
     fn process_intrinsic_gas_cost(ref self: ExecutionContext);
     /// Debug print the execution context.
@@ -45,6 +47,20 @@ impl ExecutionContextImpl of ExecutionContextTrait {
         ExecutionContext {
             call_context: call_context, program_counter: 0_u32, gas_used: 0_u64, stack: stack
         }
+    }
+
+    /// Update the execution context with a new stack
+    /// # Arguments
+    /// * `self` - The execution context.
+    /// * `stack` - The new stack
+    fn update_stack(ref self: ExecutionContext, stack: Stack) {
+        // TODO: debug `Failed to specialize: `dup<kakarot::context::ExecutionContext>` error
+        self = ExecutionContext {
+            call_context: self.call_context,
+            program_counter: self.program_counter,
+            gas_used: self.gas_used,
+            stack
+        };
     }
 
     /// Compute the intrinsic gas cost for the current transaction and increase the gas used.
