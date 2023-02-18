@@ -33,7 +33,7 @@ test:
 # Format the project
 format:
 	@echo "Formatting..."
-	cairo-format src
+	cairo-format -r src
 
 # Clean the project
 clean:
